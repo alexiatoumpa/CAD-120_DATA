@@ -1,3 +1,3 @@
 import os
-DATASET_PATH = 'PATH FOR CAD-120 DATASET'+'images/'
+DATASET_PATH = '/home/scat/Datasets/CAD-120/'+'images/'
 ANNOTATION_PATH = os.getcwd()[:-len('dev')]+'enhanced_annotations/'
