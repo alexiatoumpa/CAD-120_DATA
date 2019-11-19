@@ -1,4 +1,5 @@
 import __init__ as init
+from cad_tracks import readSkeletons
 import cv2, os,re
 
 for subject in os.listdir(init.DATASET_PATH):
@@ -8,18 +9,25 @@ for subject in os.listdir(init.DATASET_PATH):
 
             PATH = init.DATASET_PATH+subject+'/'+activity+'/'+task+'/'
             lendir = len(os.listdir(PATH))/2
-
             print(PATH)
-
+            # Compute total number of objects in the video
             object_num = sum(1 for i in os.listdir(init.ANNOTATION_PATH+\
               subject[:9]+'annotations/'+activity+'/') if (task in i) and \
-                ('obj' in i) )
+              ('obj' in i) )
+
+            # Skeletal information
+            file = open(init.ANNOTATION_PATH+subject[:9]+'annotations/'+\
+              activity+'/'+task+'.txt')
+            skeletal_lines = file.readlines()
+            P, ORI,_,_ =readSkeletons(skeletal_lines)
 
             # Parse frames of video ...
             for frame in range(1,lendir):
                 imgname = init.DATASET_PATH+subject+'/'+activity+'/'+task+\
                   '/RGB_'+str(frame)+'.png'
                 img = cv2.imread(imgname)
+
+                # For every object in the video ...
                 for o in range(object_num):
                     file = open(init.ANNOTATION_PATH+subject[:9]+'annotations/'+\
                       activity+'/'+task+'_obj'+str(o+1)+'.txt', 'r')
