@@ -16,7 +16,7 @@ for subject in os.listdir(init.DATASET_PATH):
                 ('obj' in i) )
 
             # Parse frames of video ...
-            for frame in range(1,lendir+1):
+            for frame in range(1,lendir):
                 imgname = init.DATASET_PATH+subject+'/'+activity+'/'+task+\
                   '/RGB_'+str(frame)+'.png'
                 img = cv2.imread(imgname)
@@ -24,7 +24,7 @@ for subject in os.listdir(init.DATASET_PATH):
                     file = open(init.ANNOTATION_PATH+subject[:9]+'annotations/'+\
                       activity+'/'+task+'_obj'+str(o+1)+'.txt', 'r')
                     lines = file.readlines()
-                    line = lines[frame-1]
+                    line = lines[frame]
                     coordinates = re.split(',', line)
                     ulx, uly = float(coordinates[2]), float(coordinates[3])
                     lrx, lry = float(coordinates[4]), float(coordinates[5])
